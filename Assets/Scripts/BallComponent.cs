@@ -4,31 +4,29 @@ using UnityEngine;
 
 public class BallComponent : MonoBehaviour
 {
-
-    public float scaleUpSpeed = 0.025f;
- 
-    
+    public float scaleUp = 2.0f;
+    float timer = 0.0f;
 
     // Start is called before the first frame update
     void Start()
     {
 
-        
+     
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(" FPS: " + (1 / Time.deltaTime));
+        timer += Time.deltaTime;
 
-
-        if (transform.localScale.y < 3.0f)
+        if (transform.localScale.x < 3.0f)
         {
-            transform.localScale += Vector3.one * scaleUpSpeed;
+            transform.localScale += scaleUp * Time.deltaTime * Vector3.one;
+            Debug.Log(" Time passed: " + timer);
         }
 
-
-
     }
+
+    
 }
