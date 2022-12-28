@@ -24,7 +24,7 @@ public class BallComponent : MonoBehaviour
      maxFPS = Mathf.Max(maxFPS, currentFPS);
 
      Debug.Log("FPS: " + currentFPS + " (Min: " + minFPS + ", Max: " + maxFPS + ")");
-        
+     
 
     }
 
