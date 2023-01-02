@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 1338916444}
   - component: {fileID: 1338916443}
   - component: {fileID: 1338916442}
+  - component: {fileID: 1338916445}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -153,8 +154,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18845d195f40e8e429787d99d07a4833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 1
-  Instructions: 01000000020000000300000004000000
 --- !u!212 &1338916443
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -220,6 +219,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1338916445
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1338916441}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.28, y: 1.28, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1886062533
 GameObject:
   m_ObjectHideFlags: 0

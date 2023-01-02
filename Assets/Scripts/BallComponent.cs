@@ -4,58 +4,42 @@ using UnityEngine;
 using System;
 public class BallComponent : MonoBehaviour
 {
+    Rigidbody2D m_rigidbody;
 
-    public float BallSpeed = 1.0f;
+    private void OnMouseDrag()
+    {
+        m_rigidbody.simulated = false;
 
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        transform.position = new Vector3(worldPos.x, worldPos.y, 0);
+    }
+
+    private void OnMouseUp()
+    {
+        m_rigidbody.simulated = true;
+    }
     // Start is called before the first frame update
     void Start()
     {
-     
-        
+
+        m_rigidbody = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+        if (GameplayManager.Instance.Pause)
+        {
+            m_rigidbody.simulated = false;
+
+        }
+         else
+        {
+            m_rigidbody.simulated = true;
+        }
 
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            transform.position += Vector3.up * BallSpeed;
-            transform.localScale = new Vector3(1, 1, 1);
-        }
-            
-                
-
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            transform.position += Vector3.down * BallSpeed;
-            transform.localScale = new Vector3(1, -1, 1);
-        }
-          
-
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            transform.position += Vector3.left * BallSpeed;
-            transform.localScale = new Vector3(-1, 1, 1);
-        }
-            
-
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            transform.position += Vector3.right * BallSpeed;
-            transform.localScale = new Vector3(1, 1, 1);
-        }
-            
-
-        if (Input.GetKeyDown(KeyCode.Space) & transform.localScale.x < 2)
-        {
-            transform.localScale = Vector3.one * 2;
-        }
-        else if (Input.GetKeyDown(KeyCode.Space) & transform.localScale.x != 1)
-        {
-            transform.localScale = new Vector3(1, 1, 1);
-        }
     }
 
 }
