@@ -5,7 +5,11 @@ using System;
 public class BallComponent : MonoBehaviour
 {
     Rigidbody2D m_rigidbody;
-
+    
+    public bool IsSimulated()
+    {
+        return m_rigidbody.simulated;
+    }
     private void OnMouseDrag()
     {
         m_rigidbody.simulated = false;
@@ -23,25 +27,27 @@ public class BallComponent : MonoBehaviour
     {
 
         m_rigidbody = GetComponent<Rigidbody2D>();
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
         if (GameplayManager.Instance.Pause)
         {
             m_rigidbody.simulated = false;
 
         }
-         else
+        else
         {
             m_rigidbody.simulated = true;
         }
 
-
-    }
-
+        
+        
+}
 }
 
 
