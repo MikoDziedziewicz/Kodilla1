@@ -11,8 +11,8 @@ public class CameraController : MonoBehaviour
     private Rigidbody2D ballRigidbody;
     private BallComponent ball;
 
-
-
+    float speed;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -32,8 +32,8 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         
+
     }
 
     private void FixedUpdate()
@@ -41,7 +41,8 @@ public class CameraController : MonoBehaviour
         if (!followTarget.IsSimulated())
             return;
 
-        float speed = ballRigidbody.velocity.magnitude;
-        transform.position = Vector3.MoveTowards(transform.position, originalPosition + followTarget.transform.position, speed * Time.deltaTime);
+        speed = ballRigidbody.velocity.magnitude;
+        float distance = speed * Time.fixedDeltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, originalPosition + followTarget.transform.position, distance);
     }
 }
