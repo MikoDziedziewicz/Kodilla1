@@ -20,6 +20,17 @@ public class BallComponent : MonoBehaviour
 
     private Vector3 c_startPosition;
     private CameraController cameraPosition;
+
+    private AudioSource m_audioSource;
+    public AudioClip PullSound;
+    public AudioClip ShootSound;
+    public AudioClip RestartSound;
+    public AudioClip ImpactSound;
+
+    private Animator m_animator;
+
+    private ParticleSystem m_particles;
+
     public bool IsSimulated()
     {
         return m_rigidbody.simulated;
@@ -53,13 +64,20 @@ public class BallComponent : MonoBehaviour
     private void OnMouseUp()
     {
         m_rigidbody.simulated = true;
+        m_audioSource.PlayOneShot(ShootSound);
+        m_particles.Play();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        
+
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             m_hitTheGround = true;
+            m_audioSource.PlayOneShot(ImpactSound);
+            m_animator.enabled = true;
+            m_animator.Play(0);
         }
     }
 
@@ -81,7 +99,14 @@ public class BallComponent : MonoBehaviour
         cameraPosition = FindObjectOfType<CameraController>();
         c_startPosition = cameraPosition.transform.position;
 
+        m_audioSource = GetComponent<AudioSource>();
+
+        m_animator = GetComponentInChildren<Animator>();
+
+        m_particles = GetComponentInChildren<ParticleSystem>();
     }
+
+
 
     // Update is called once per frame
     void Update()
@@ -113,8 +138,10 @@ public class BallComponent : MonoBehaviour
         m_trailRenderer.enabled = !m_hitTheGround;
 
         if (Input.GetKeyUp(KeyCode.R))
+        {
             Restart();
-
+            m_audioSource.PlayOneShot(RestartSound);
+        }
     }
 
     private void Restart()
@@ -140,7 +167,12 @@ public class BallComponent : MonoBehaviour
         m_lineRenderer.positionCount = 3;
         Vector2 leftArm = m_connectedBody.position + Vector2.left;
         m_lineRenderer.SetPositions(new Vector3[] { leftArm, transform.position, m_connectedBody.position });
-    }    
+    }
+
+    private void OnMouseDown()
+    {
+        m_audioSource.PlayOneShot(PullSound);
+    }
 }
 
 
