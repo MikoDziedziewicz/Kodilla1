@@ -8,9 +8,10 @@ public class TargetComponent : MonoBehaviour
     private AudioSource t_audioSource;
     public AudioClip CollisionSound;
 
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-       if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Ball"))
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Ball"))
         {
             Debug.Log("it works");
             t_particles.Play();
@@ -23,11 +24,12 @@ public class TargetComponent : MonoBehaviour
     {
         t_particles = GetComponentInChildren<ParticleSystem>();
         t_audioSource = GetComponent<AudioSource>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
