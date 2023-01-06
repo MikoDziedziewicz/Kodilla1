@@ -56,7 +56,7 @@ public class BallComponent : MonoBehaviour
             transform.position = newBallPos;
         }
 
-        SetLineRendererPoints();
+        
         
     }
 
@@ -111,6 +111,7 @@ public class BallComponent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        SetLineRendererPoints();
 
         if (GameplayManager.Instance.Pause)
         {
