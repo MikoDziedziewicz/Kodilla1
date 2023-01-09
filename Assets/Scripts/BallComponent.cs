@@ -68,6 +68,21 @@ public class BallComponent : MonoBehaviour
         m_particles.Play();
     }
 
+    private void DoPlay()
+    {
+        m_rigidbody.simulated = true;
+    }
+
+    private void DoPause()
+    {
+        m_rigidbody.simulated = false;
+    }
+
+    void OnDestroy()
+    {
+        GameplayManager.OnGamePaused -= DoPause;
+        GameplayManager.OnGamePlaying -= DoPlay;
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         
@@ -104,6 +119,9 @@ public class BallComponent : MonoBehaviour
         m_animator = GetComponentInChildren<Animator>();
 
         m_particles = GetComponentInChildren<ParticleSystem>();
+
+        GameplayManager.OnGamePaused += DoPause;
+        GameplayManager.OnGamePlaying += DoPlay;
     }
 
 
@@ -112,16 +130,6 @@ public class BallComponent : MonoBehaviour
     void Update()
     {
         SetLineRendererPoints();
-
-        if (GameplayManager.Instance.Pause)
-        {
-            m_rigidbody.simulated = false;
-
-        }
-        else
-        {
-            m_rigidbody.simulated = true;
-        }
 
         if (transform.position.x > m_connectedBody.transform.position.x + SlingStart)
         {
