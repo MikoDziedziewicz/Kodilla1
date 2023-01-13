@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-public class BallComponent : MonoBehaviour
+public class BallComponent : InteractiveComponent
 {
     private SpringJoint2D m_connectedJoint;
     private Rigidbody2D m_connectedBody;
@@ -31,10 +31,13 @@ public class BallComponent : MonoBehaviour
 
     private ParticleSystem m_particles;
 
+   protected override void MakeSound() { }
+
     public bool IsSimulated()
     {
         return m_rigidbody.simulated;
     }
+
     private void OnMouseDrag()
     {
         m_hitTheGround = false;
@@ -55,44 +58,60 @@ public class BallComponent : MonoBehaviour
         {
             transform.position = newBallPos;
         }
+    }
 
-        
-        
+    override public void DoRestart()
+    {
+        transform.position = m_startPosition;
+        transform.rotation = m_startRotation;
+
+        m_rigidbody.velocity = Vector3.zero;
+        m_rigidbody.angularVelocity = 0.0f;
+        m_rigidbody.simulated = true;
+
+        m_connectedJoint.enabled = true;
+        m_lineRenderer.enabled = true;
+        m_trailRenderer.enabled = false;
+
+        SetLineRendererPoints();
+
+        cameraPosition.transform.position = c_startPosition;
     }
 
 
     private void OnMouseUp()
     {
         m_rigidbody.simulated = true;
-        m_audioSource.PlayOneShot(ShootSound);
         m_particles.Play();
+        MakeSound();
+        {
+            m_audioSource.PlayOneShot(ShootSound);
+        }
     }
 
-    private void DoPlay()
+    protected override void DoPlay()
     {
         m_rigidbody.simulated = true;
     }
 
-    private void DoPause()
+    protected override void DoPause()
     {
         m_rigidbody.simulated = false;
     }
 
-    void OnDestroy()
-    {
-        GameplayManager.OnGamePaused -= DoPause;
-        GameplayManager.OnGamePlaying -= DoPlay;
-    }
+    protected override void OnDestroy() { }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        
 
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             m_hitTheGround = true;
-            m_audioSource.PlayOneShot(ImpactSound);
             m_animator.enabled = true;
             m_animator.Play(0);
+            MakeSound();
+            {
+                m_audioSource.PlayOneShot(ImpactSound);
+            }
         }
     }
 
@@ -120,11 +139,8 @@ public class BallComponent : MonoBehaviour
 
         m_particles = GetComponentInChildren<ParticleSystem>();
 
-        GameplayManager.OnGamePaused += DoPause;
-        GameplayManager.OnGamePlaying += DoPlay;
+        OnStart();
     }
-
-
 
     // Update is called once per frame
     void Update()
@@ -136,7 +152,6 @@ public class BallComponent : MonoBehaviour
             m_connectedJoint.enabled = false;
             m_lineRenderer.enabled = false;
             m_trailRenderer.enabled = true;
-
         }
 
         if (transform.position.x < m_connectedBody.transform.position.x + SlingStart)
@@ -146,29 +161,6 @@ public class BallComponent : MonoBehaviour
 
         m_trailRenderer.enabled = !m_hitTheGround;
 
-        if (Input.GetKeyUp(KeyCode.R))
-        {
-            Restart();
-            m_audioSource.PlayOneShot(RestartSound);
-        }
-    }
-
-    private void Restart()
-    {
-        transform.position = m_startPosition;
-        transform.rotation = m_startRotation;
-
-        m_rigidbody.velocity = Vector3.zero;
-        m_rigidbody.angularVelocity = 0.0f;
-        m_rigidbody.simulated = true;
-
-        m_connectedJoint.enabled = true;
-        m_lineRenderer.enabled = true;
-        m_trailRenderer.enabled = false;
-
-        SetLineRendererPoints();
-
-        cameraPosition.transform.position = c_startPosition;
     }
 
     private void SetLineRendererPoints()
@@ -180,8 +172,14 @@ public class BallComponent : MonoBehaviour
 
     private void OnMouseDown()
     {
-        m_audioSource.PlayOneShot(PullSound);
+        MakeSound();
+        {
+            m_audioSource.PlayOneShot(PullSound);
+        }
+
     }
+
+    
 }
 
 

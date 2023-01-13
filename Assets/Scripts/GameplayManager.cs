@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameplayManager : Singleton<GameplayManager>
 {
+    
     public enum EGameState
     {
         Playing,
@@ -41,10 +43,35 @@ public class GameplayManager : Singleton<GameplayManager>
     public static event GameStateCallback OnGamePaused;
     public static event GameStateCallback OnGamePlaying;
 
+    List<IRestartableObject> m_restartableObjects = new List<IRestartableObject>();
+
+    private void GetAllRestartableObjects()
+    {
+        m_restartableObjects.Clear();
+
+        GameObject[] rootGameObjects = SceneManager.GetActiveScene().GetRootGameObjects();
+        foreach (var rootGameObject in rootGameObjects)
+        {
+            IRestartableObject[] childrenInterfaces = rootGameObject.GetComponentsInChildren<IRestartableObject>();
+
+            foreach (var childInterface in childrenInterfaces)
+                m_restartableObjects.Add(childInterface);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+       
+            m_state = EGameState.Playing;
+            GetAllRestartableObjects();
 
+    }
+
+    private void Restart()
+    {
+        foreach (var restartableObject in m_restartableObjects)
+            restartableObject.DoRestart();
     }
 
     // Update is called once per frame
@@ -67,5 +94,9 @@ public class GameplayManager : Singleton<GameplayManager>
                     break;
             }
         }
+
+        if (Input.GetKeyUp(KeyCode.R))
+            Restart();
     }
+
 }
