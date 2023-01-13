@@ -23,6 +23,6 @@ public class InteractiveComponent : MonoBehaviour, IRestartableObject
     }
     protected virtual void MakeSound() { }
 
-    
-    
+
+
 }

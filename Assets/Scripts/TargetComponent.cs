@@ -23,6 +23,7 @@ public class TargetComponent : InteractiveComponent
             {
                 t_audioSource.PlayOneShot(CollisionSound);
             }
+            GameplayManager.Instance.Points += 1;
         }
     
 

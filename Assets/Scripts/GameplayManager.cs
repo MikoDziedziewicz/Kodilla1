@@ -5,7 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class GameplayManager : Singleton<GameplayManager>
 {
-    
+    private HudController m_HUD;
+    private int m_points = 0;
+
+    public int Points
+    {
+        get { return m_points; }
+        set
+        {
+            m_points = value;
+            m_HUD.UpdatePoints(m_points);
+        }
+
+    }
+
     public enum EGameState
     {
         Playing,
@@ -63,40 +76,39 @@ public class GameplayManager : Singleton<GameplayManager>
     void Start()
     {
        
-            m_state = EGameState.Playing;
-            GetAllRestartableObjects();
+        m_state = EGameState.Playing;
+        GetAllRestartableObjects();
+
+        m_HUD = FindObjectOfType<HudController>();
+        Points = 0;
+
 
     }
 
-    private void Restart()
+    public void Restart()
     {
         foreach (var restartableObject in m_restartableObjects)
             restartableObject.DoRestart();
+        Points = 0;
     }
 
+    public void PlayPause()
+    {
+        switch (GameState)
+        {
+            case EGameState.Playing: { GameState = EGameState.Paused; } break;
+            case EGameState.Paused: { GameState = EGameState.Playing; } break;
+        }
+    }
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.Space))
-        {
-            switch (GameState)
-            {
-                case EGameState.Playing:
-                    {
-                        GameState = EGameState.Paused;
-                    }
-                    break;
-
-                case EGameState.Paused:
-                    {
-                        GameState = EGameState.Playing;
-                    }
-                    break;
-            }
-        }
-
+            PlayPause();
         if (Input.GetKeyUp(KeyCode.R))
             Restart();
+        if (Input.GetKeyUp(KeyCode.Escape))
+            GameState = EGameState.Paused;
     }
 
 }
