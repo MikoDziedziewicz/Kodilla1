@@ -5,27 +5,20 @@ using UnityEngine;
 public class TargetComponent : InteractiveComponent
 {
     private ParticleSystem t_particles;
-    private AudioSource t_audioSource;
     public AudioClip CollisionSound;
     private Rigidbody2D m_rigidbody;
-    private Vector3 m_startPosition;
-    private Quaternion m_startRotation;
 
-    protected override void MakeSound() { }
-    
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Ball"))
         {
             Debug.Log("it works");
             t_particles.Play();
-            MakeSound();
-            {
-                t_audioSource.PlayOneShot(CollisionSound);
-            }
+            MakeSound(CollisionSound);
             GameplayManager.Instance.Points += 1;
         }
-    
+
 
     }
 
@@ -40,28 +33,19 @@ public class TargetComponent : InteractiveComponent
         m_rigidbody.simulated = false;
     }
     protected override void OnDestroy() { }
-    public override void DoRestart()
-    {
-        transform.position = m_startPosition;
-        transform.rotation = m_startRotation;
-    }
+    public override void DoRestart() { }
+
 
     // Start is called before the first frame update
     void Start()
     {
         t_particles = GetComponentInChildren<ParticleSystem>();
-        t_audioSource = GetComponent<AudioSource>();
+        m_audioSource = GetComponent<AudioSource>();
         m_rigidbody = GetComponent<Rigidbody2D>();
 
         OnStart();
 
         m_startPosition = transform.position;
         m_startRotation = transform.rotation;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

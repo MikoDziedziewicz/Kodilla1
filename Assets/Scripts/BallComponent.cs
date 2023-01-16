@@ -15,13 +15,10 @@ public class BallComponent : InteractiveComponent
 
     private bool m_hitTheGround = false;
 
-    private Vector3 m_startPosition;
-    private Quaternion m_startRotation;
-
     private Vector3 c_startPosition;
     private CameraController cameraPosition;
 
-    private AudioSource m_audioSource;
+    
     public AudioClip PullSound;
     public AudioClip ShootSound;
     public AudioClip RestartSound;
@@ -31,7 +28,7 @@ public class BallComponent : InteractiveComponent
 
     private ParticleSystem m_particles;
 
-   protected override void MakeSound() { }
+    
 
     public bool IsSimulated()
     {
@@ -62,9 +59,6 @@ public class BallComponent : InteractiveComponent
 
     override public void DoRestart()
     {
-        transform.position = m_startPosition;
-        transform.rotation = m_startRotation;
-
         m_rigidbody.velocity = Vector3.zero;
         m_rigidbody.angularVelocity = 0.0f;
         m_rigidbody.simulated = true;
@@ -83,10 +77,7 @@ public class BallComponent : InteractiveComponent
     {
         m_rigidbody.simulated = true;
         m_particles.Play();
-        MakeSound();
-        {
-            m_audioSource.PlayOneShot(ShootSound);
-        }
+        MakeSound(PullSound);
     }
 
     protected override void DoPlay()
@@ -108,10 +99,7 @@ public class BallComponent : InteractiveComponent
             m_hitTheGround = true;
             m_animator.enabled = true;
             m_animator.Play(0);
-            MakeSound();
-            {
-                m_audioSource.PlayOneShot(ImpactSound);
-            }
+            MakeSound(ImpactSound);
         }
     }
 
@@ -172,11 +160,7 @@ public class BallComponent : InteractiveComponent
 
     private void OnMouseDown()
     {
-        MakeSound();
-        {
-            m_audioSource.PlayOneShot(PullSound);
-        }
-
+        MakeSound(PullSound);
     }
 
     

@@ -4,11 +4,24 @@ using UnityEngine;
 
 public class InteractiveComponent : MonoBehaviour, IRestartableObject
 {
-    public virtual void DoRestart() { }
+    protected AudioSource m_audioSource;
+    protected Vector3 m_startPosition;
+    protected Quaternion m_startRotation;
+    public virtual void DoRestart() 
+    {
+        transform.position = m_startPosition;
+        transform.rotation = m_startRotation;
+    }
 
-    protected virtual void DoPlay(){ }
+    protected virtual void DoPlay()
+    { 
 
-    protected virtual void DoPause() { }
+    }
+
+    protected virtual void DoPause() 
+    { 
+
+    }
 
     protected virtual void OnStart()
     {
@@ -21,8 +34,14 @@ public class InteractiveComponent : MonoBehaviour, IRestartableObject
         GameplayManager.OnGamePaused -= DoPause;
         GameplayManager.OnGamePlaying -= DoPlay;
     }
-    protected virtual void MakeSound() { }
+    protected void MakeSound(AudioClip dzwiek) 
+    {
+        m_audioSource.PlayOneShot(dzwiek);
+    }
 
+    void Start()
+    {
+    }
 
 
 }

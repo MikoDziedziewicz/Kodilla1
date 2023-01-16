@@ -9,6 +9,7 @@ public class PauseMenuController : MonoBehaviour
     public Button QuitButton;
     public GameObject Panel;
 
+
     public void SetPanelVisible(bool visible)
     {
         Panel.SetActive(visible);
