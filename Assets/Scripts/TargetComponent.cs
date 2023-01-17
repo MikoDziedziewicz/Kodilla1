@@ -6,9 +6,7 @@ public class TargetComponent : InteractiveComponent
 {
     private ParticleSystem t_particles;
     public AudioClip CollisionSound;
-    private Rigidbody2D m_rigidbody;
-
-
+  
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Ball"))
@@ -32,8 +30,15 @@ public class TargetComponent : InteractiveComponent
     {
         m_rigidbody.simulated = false;
     }
-    protected override void OnDestroy() { }
-    public override void DoRestart() { }
+    protected override void OnDestroy() 
+    {
+        base.OnDestroy();
+    }
+    public override void DoRestart()
+    {
+        base.DoRestart();
+    }
+
 
 
     // Start is called before the first frame update

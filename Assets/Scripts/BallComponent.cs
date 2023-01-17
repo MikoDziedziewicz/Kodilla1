@@ -7,7 +7,6 @@ public class BallComponent : InteractiveComponent
     private SpringJoint2D m_connectedJoint;
     private Rigidbody2D m_connectedBody;
     public float SlingStart = 0.5f;
-    private Rigidbody2D m_rigidbody;
     public float MaxSpringDistance = 2.5f;
 
     private LineRenderer m_lineRenderer;
@@ -27,13 +26,6 @@ public class BallComponent : InteractiveComponent
     private Animator m_animator;
 
     private ParticleSystem m_particles;
-
-    
-
-    public bool IsSimulated()
-    {
-        return m_rigidbody.simulated;
-    }
 
     private void OnMouseDrag()
     {
@@ -57,8 +49,9 @@ public class BallComponent : InteractiveComponent
         }
     }
 
-    override public void DoRestart()
+    public override void DoRestart()
     {
+        base.DoRestart();
         m_rigidbody.velocity = Vector3.zero;
         m_rigidbody.angularVelocity = 0.0f;
         m_rigidbody.simulated = true;
@@ -82,15 +75,18 @@ public class BallComponent : InteractiveComponent
 
     protected override void DoPlay()
     {
-        m_rigidbody.simulated = true;
+        base.DoPlay();
     }
 
     protected override void DoPause()
     {
-        m_rigidbody.simulated = false;
+        base.DoPause();
     }
 
-    protected override void OnDestroy() { }
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
