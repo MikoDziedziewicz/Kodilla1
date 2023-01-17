@@ -22,13 +22,13 @@ public class TargetComponent : InteractiveComponent
 
     protected override void DoPlay()
     {
-        m_rigidbody.simulated = true;
+        base.DoPlay();
     }
 
 
     protected override void DoPause()
     {
-        m_rigidbody.simulated = false;
+        base.DoPause();
     }
     protected override void OnDestroy() 
     {
