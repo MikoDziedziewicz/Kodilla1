@@ -35,7 +35,7 @@ public class InteractiveComponent : MonoBehaviour, IRestartableObject
         GameplayManager.OnGamePlaying += DoPlay;
     }
 
-    protected virtual void OnDestroy()
+    protected void OnDestroy()
     {
         GameplayManager.OnGamePaused -= DoPause;
         GameplayManager.OnGamePlaying -= DoPlay;
