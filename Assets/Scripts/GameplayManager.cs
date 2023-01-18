@@ -34,6 +34,9 @@ public class GameplayManager : Singleton<GameplayManager>
         get { return m_state; }
         set 
         {
+            if (m_state == value)
+                return;
+
             m_state = value;
             switch (m_state)
             {
@@ -79,14 +82,11 @@ public class GameplayManager : Singleton<GameplayManager>
     // Start is called before the first frame update
     void Start()
     {
-       
-        m_state = EGameState.Playing;
+        GameState = EGameState.Playing;
         GetAllRestartableObjects();
 
         m_HUD = FindObjectOfType<HudController>();
         Points = 0;
-
-
     }
 
     public void Restart()
@@ -94,6 +94,8 @@ public class GameplayManager : Singleton<GameplayManager>
         foreach (var restartableObject in m_restartableObjects)
             restartableObject.DoRestart();
         Points = 0;
+
+        GameState = EGameState.Playing;
     }
 
     public void PlayPause()
@@ -112,8 +114,7 @@ public class GameplayManager : Singleton<GameplayManager>
         if (Input.GetKeyUp(KeyCode.R))
             Restart();
         if (Input.GetKeyUp(KeyCode.Escape))
-            GameState = EGameState.Paused;
-
+            PlayPause();
     }
 
 }

@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PauseMenuController : MonoBehaviour
+public class PauseMenuController : Singleton<PauseMenuController>
 {
     public Button ResumeButton;
     public Button QuitButton;
@@ -20,18 +21,21 @@ public class PauseMenuController : MonoBehaviour
     {
         SetPanelVisible(true);
     }
+    private void OnPlay()
+    {
+        SetPanelVisible(false);
+    }
 
     private void OnResume()
     {
         GameplayManager.Instance.GameState = GameplayManager.EGameState.Playing;
-
-        SetPanelVisible(false);
+        //SetPanelVisible(false);
     }
 
     private void OnRestart()
     {
        GameplayManager.Instance.Restart();
-       SetPanelVisible(false);
+       //SetPanelVisible(false);
     }
 
     private void OnQuit()
@@ -42,17 +46,20 @@ public class PauseMenuController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ResumeButton.onClick.AddListener(delegate { OnResume(); });
-        QuitButton.onClick.AddListener(delegate { OnQuit(); });
-        RestartButton.onClick.AddListener(delegate { OnRestart(); });
+        ResumeButton.onClick.AddListener(OnResume);
+        QuitButton.onClick.AddListener(OnQuit);
+        RestartButton.onClick.AddListener(OnRestart);
         SetPanelVisible(false);
 
         GameplayManager.OnGamePaused += OnPause;
+        GameplayManager.OnGamePlaying += OnPlay;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDestroy()
     {
-        
+        GameplayManager.OnGamePaused -= OnPause;
+        GameplayManager.OnGamePlaying -= OnPlay;
     }
+
+
 }
