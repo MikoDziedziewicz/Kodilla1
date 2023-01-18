@@ -17,39 +17,15 @@ public class TargetComponent : InteractiveComponent
             GameplayManager.Instance.Points += 1;
         }
 
-
     }
-
-    protected override void DoPlay()
-    {
-        base.DoPlay();
-    }
-
-
-    protected override void DoPause()
-    {
-        base.DoPause();
-    }
-    protected override void OnDestroy() 
-    {
-        base.OnDestroy();
-    }
-    public override void DoRestart()
-    {
-        base.DoRestart();
-    }
-
-
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         t_particles = GetComponentInChildren<ParticleSystem>();
         m_audioSource = GetComponent<AudioSource>();
         m_rigidbody = GetComponent<Rigidbody2D>();
-
-        OnStart();
-
         m_startPosition = transform.position;
         m_startRotation = transform.rotation;
     }

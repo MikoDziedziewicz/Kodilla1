@@ -19,6 +19,8 @@ public class GameplayManager : Singleton<GameplayManager>
 
     }
 
+
+
     public enum EGameState
     {
         Playing,
@@ -51,6 +53,8 @@ public class GameplayManager : Singleton<GameplayManager>
             }
         }
     }
+
+    
 
     public delegate void GameStateCallback();
     public static event GameStateCallback OnGamePaused;
@@ -109,6 +113,7 @@ public class GameplayManager : Singleton<GameplayManager>
             Restart();
         if (Input.GetKeyUp(KeyCode.Escape))
             GameState = EGameState.Paused;
+
     }
 
 }

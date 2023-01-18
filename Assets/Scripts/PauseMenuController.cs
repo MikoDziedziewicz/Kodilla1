@@ -7,6 +7,7 @@ public class PauseMenuController : MonoBehaviour
 {
     public Button ResumeButton;
     public Button QuitButton;
+    public Button RestartButton;
     public GameObject Panel;
 
 
@@ -27,6 +28,12 @@ public class PauseMenuController : MonoBehaviour
         SetPanelVisible(false);
     }
 
+    private void OnRestart()
+    {
+       GameplayManager.Instance.Restart();
+       SetPanelVisible(false);
+    }
+
     private void OnQuit()
     {
         Application.Quit();
@@ -37,7 +44,7 @@ public class PauseMenuController : MonoBehaviour
     {
         ResumeButton.onClick.AddListener(delegate { OnResume(); });
         QuitButton.onClick.AddListener(delegate { OnQuit(); });
-
+        RestartButton.onClick.AddListener(delegate { OnRestart(); });
         SetPanelVisible(false);
 
         GameplayManager.OnGamePaused += OnPause;

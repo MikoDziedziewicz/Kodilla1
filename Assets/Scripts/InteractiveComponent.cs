@@ -13,23 +13,23 @@ public class InteractiveComponent : MonoBehaviour, IRestartableObject
     {
         return m_rigidbody.simulated;
     }
-    public virtual void DoRestart() 
+    public virtual void DoRestart()
     {
         transform.position = m_startPosition;
         transform.rotation = m_startRotation;
     }
 
-    protected virtual void DoPlay()
+    protected void DoPlay()
     {
         m_rigidbody.simulated = true;
     }
 
-    protected virtual void DoPause() 
+    protected void DoPause() 
     {
         m_rigidbody.simulated = false;
     }
 
-    protected virtual void OnStart()
+    protected virtual void Start()
     {
         GameplayManager.OnGamePaused += DoPause;
         GameplayManager.OnGamePlaying += DoPlay;

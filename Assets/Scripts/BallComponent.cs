@@ -65,7 +65,6 @@ public class BallComponent : InteractiveComponent
         cameraPosition.transform.position = c_startPosition;
     }
 
-
     private void OnMouseUp()
     {
         m_rigidbody.simulated = true;
@@ -73,20 +72,6 @@ public class BallComponent : InteractiveComponent
         MakeSound(PullSound);
     }
 
-    protected override void DoPlay()
-    {
-        base.DoPlay();
-    }
-
-    protected override void DoPause()
-    {
-        base.DoPause();
-    }
-
-    protected override void OnDestroy()
-    {
-        base.OnDestroy();
-    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
@@ -100,9 +85,10 @@ public class BallComponent : InteractiveComponent
     }
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-       
+        base.Start();
+
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_connectedJoint = GetComponent<SpringJoint2D>();
         m_connectedBody = m_connectedJoint.connectedBody;
@@ -123,7 +109,6 @@ public class BallComponent : InteractiveComponent
 
         m_particles = GetComponentInChildren<ParticleSystem>();
 
-        OnStart();
     }
 
     // Update is called once per frame
@@ -159,7 +144,6 @@ public class BallComponent : InteractiveComponent
         MakeSound(PullSound);
     }
 
-    
 }
 
 
