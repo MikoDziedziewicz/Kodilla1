@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 public class GameplayManager : Singleton<GameplayManager>
 {
     private HudController m_HUD;
     private int m_points = 0;
+    public Button PauseButton;
+    public Button RestartButton;
 
+    
     public int Points
     {
         get { return m_points; }
@@ -18,9 +21,6 @@ public class GameplayManager : Singleton<GameplayManager>
         }
 
     }
-
-
-
     public enum EGameState
     {
         Playing,
@@ -54,8 +54,6 @@ public class GameplayManager : Singleton<GameplayManager>
         }
     }
 
-    
-
     public delegate void GameStateCallback();
     public static event GameStateCallback OnGamePaused;
     public static event GameStateCallback OnGamePlaying;
@@ -79,14 +77,12 @@ public class GameplayManager : Singleton<GameplayManager>
     // Start is called before the first frame update
     void Start()
     {
-       
+
         m_state = EGameState.Playing;
         GetAllRestartableObjects();
 
         m_HUD = FindObjectOfType<HudController>();
         Points = 0;
-
-
     }
 
     public void Restart()
@@ -94,6 +90,7 @@ public class GameplayManager : Singleton<GameplayManager>
         foreach (var restartableObject in m_restartableObjects)
             restartableObject.DoRestart();
         Points = 0;
+        GameState = EGameState.Playing;
     }
 
     public void PlayPause()
@@ -112,7 +109,7 @@ public class GameplayManager : Singleton<GameplayManager>
         if (Input.GetKeyUp(KeyCode.R))
             Restart();
         if (Input.GetKeyUp(KeyCode.Escape))
-            GameState = EGameState.Paused;
+            PlayPause();
 
     }
 

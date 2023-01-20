@@ -3,37 +3,63 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PauseMenuController : MonoBehaviour
+public class PauseMenuController : Singleton<PauseMenuController>
 {
     public Button ResumeButton;
     public Button QuitButton;
     public Button RestartButton;
     public GameObject Panel;
-
+    public GameObject panelQuestion;
+    public Button YesButton;
+    public Button NoButton;
+    private HudController m_HUD;
 
     public void SetPanelVisible(bool visible)
     {
         Panel.SetActive(visible);
     }
 
+    public void SetPanelQuestionVisible(bool visible)
+    {
+        panelQuestion.SetActive(visible);
+    }
+
     private void OnPause()
     {
         SetPanelVisible(true);
+        m_HUD.PauseButton.enabled = false;
+        m_HUD.RestartButton.enabled = false;
+
     }
 
+    private void OnPlay()
+    {
+        SetPanelVisible(false);
+        m_HUD.PauseButton.enabled = true;
+        m_HUD.RestartButton.enabled = true;
+    }
+   
     private void OnResume()
     {
         GameplayManager.Instance.GameState = GameplayManager.EGameState.Playing;
-
-        SetPanelVisible(false);
     }
 
     private void OnRestart()
     {
        GameplayManager.Instance.Restart();
-       SetPanelVisible(false);
     }
 
+    private void QuestionPopup()
+    {
+        SetPanelVisible(false);
+        SetPanelQuestionVisible(true);
+    }
+
+    private void BackToMenu()
+    {
+        SetPanelVisible(true);
+        SetPanelQuestionVisible(false);
+    }    
     private void OnQuit()
     {
         Application.Quit();
@@ -42,17 +68,26 @@ public class PauseMenuController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ResumeButton.onClick.AddListener(delegate { OnResume(); });
-        QuitButton.onClick.AddListener(delegate { OnQuit(); });
-        RestartButton.onClick.AddListener(delegate { OnRestart(); });
+
+        ResumeButton.onClick.AddListener(OnResume);
+        QuitButton.onClick.AddListener(QuestionPopup);
+        RestartButton.onClick.AddListener(OnRestart);
+        YesButton.onClick.AddListener(OnQuit);
+        NoButton.onClick.AddListener(BackToMenu);
+
         SetPanelVisible(false);
+        SetPanelQuestionVisible(false);
 
         GameplayManager.OnGamePaused += OnPause;
+        GameplayManager.OnGamePlaying += OnPlay;
+
+        m_HUD = FindObjectOfType<HudController>();
+
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDestroy()
     {
-        
+        GameplayManager.OnGamePaused -= OnPause;
+        GameplayManager.OnGamePlaying -= OnPlay;
     }
 }

@@ -11,7 +11,6 @@ public class TargetComponent : InteractiveComponent
     {
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Ball"))
         {
-            Debug.Log("it works");
             t_particles.Play();
             MakeSound(CollisionSound);
             GameplayManager.Instance.Points += 1;
