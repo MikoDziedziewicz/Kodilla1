@@ -19,20 +19,36 @@ public class BeachBallLevitate : MonoBehaviour
         m_startPosition = transform.position;
 
         m_startScale = transform.localScale;
+
+        StartCoroutine(BeachBallCoroutine());
     }
 
+    IEnumerator BeachBallCoroutine()
+    {
+        while (true)
+        {
+            m_curYPos = Mathf.PingPong(Time.time, Amplitude) - Amplitude * 0.5f;
+            transform.position = new Vector3(m_startPosition.x,
+                                             m_startPosition.y + m_curYPos,
+                                             m_startPosition.z);
+
+            m_curZRot += Time.deltaTime * RotationSpeed;
+            transform.rotation = Quaternion.Euler(0, 0, m_curZRot);
+
+            m_curScale = Mathf.PingPong(Time.time, Amplitude) - Amplitude * 0.5f;
+            transform.localScale = new Vector3(m_startScale.x + m_curScale, m_startScale.y + m_curScale, m_startScale.z);
+
+            yield return new WaitForSeconds(1.0f);
+        }
+    }
+
+    void Destroy()
+    {
+        StopAllCoroutines();
+    }
     // Update is called once per frame
     void Update()
     {
-        m_curYPos = Mathf.PingPong(Time.time, Amplitude) - Amplitude * 0.5f;
-        transform.position = new Vector3(m_startPosition.x,
-                                         m_startPosition.y + m_curYPos,
-                                         m_startPosition.z);
-
-        m_curZRot += Time.deltaTime * RotationSpeed;
-        transform.rotation = Quaternion.Euler(0, 0, m_curZRot);
-
-        m_curScale = Mathf.PingPong(Time.time, Amplitude) - Amplitude * 0.5f;
-        transform.localScale = new Vector3(m_startScale.x + m_curScale, m_startScale.y + m_curScale, m_startScale.z);
+     
     }
 }

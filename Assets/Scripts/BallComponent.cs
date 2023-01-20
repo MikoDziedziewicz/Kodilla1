@@ -108,30 +108,38 @@ public class BallComponent : InteractiveComponent
         m_animator = GetComponentInChildren<Animator>();
 
         m_particles = GetComponentInChildren<ParticleSystem>();
+        StartCoroutine(JointCoroutine());
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        SetLineRendererPoints();
-
-        if (transform.position.x > m_connectedBody.transform.position.x + SlingStart)
-        {
-            m_connectedJoint.enabled = false;
-            m_lineRenderer.enabled = false;
-            m_trailRenderer.enabled = true;
-        }
-
+        
+        m_trailRenderer.enabled = !m_hitTheGround;
         if (transform.position.x < m_connectedBody.transform.position.x + SlingStart)
         {
             m_trailRenderer.enabled = false;
         }
-
-        m_trailRenderer.enabled = !m_hitTheGround;
-
     }
 
+    IEnumerator JointCoroutine()
+    {
+        while (true)
+        {
+            SetLineRendererPoints();
+            if (transform.position.x > m_connectedBody.transform.position.x + SlingStart)
+            {
+                m_connectedJoint.enabled = false;
+                m_lineRenderer.enabled = false;
+                m_trailRenderer.enabled = true;
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                yield return null;
+            }
+        }
+    }
     private void SetLineRendererPoints()
     {
         m_lineRenderer.positionCount = 3;
