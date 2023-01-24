@@ -242,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb392ba87e7b86a4ab9e08c30b9791f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollisionSound: {fileID: 8300000, guid: 927cce60a2c5ab34b96b166c87d5504f, type: 3}
+  GameDatabase: {fileID: 11400000, guid: 492fb273ba8fed1448d103d887b043f8, type: 2}
 --- !u!1001 &6537917123258686551
 PrefabInstance:
   m_ObjectHideFlags: 0

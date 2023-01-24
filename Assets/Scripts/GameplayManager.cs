@@ -12,12 +12,10 @@ public class GameplayManager : Singleton<GameplayManager>
     public int m_points = 0;
     public Button PauseButton;
     public Button RestartButton;
-
+   
     // public int m_LifetimeHits = 0;
 
-    public GameObject fajneAnimacje;
-    public GameObject PrefabRef;
-
+    public GameSettingsDatabase GameDatabase;
 
 
     public int Points
@@ -118,8 +116,7 @@ public class GameplayManager : Singleton<GameplayManager>
         // TestAsync();
 
         m_state = EGameState.Playing;
-        Instantiate(fajneAnimacje, new Vector3(4.0f, -2.6f, 0.0f), Quaternion.identity);
-        Instantiate(PrefabRef, new Vector3(7.56f, 2.78f, 0.0f), Quaternion.identity);
+        Instantiate(GameDatabase.TargetPrefab, new Vector3(7.56f, 2.78f, 0.0f), Quaternion.identity);
         GetAllRestartableObjects();
 
         m_HUD = FindObjectOfType<HudController>();

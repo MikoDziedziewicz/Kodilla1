@@ -12,6 +12,10 @@ public class SaveManager : Singleton<SaveManager>
     private string m_pathJSON;
     public bool UseBinary = true;
 
+    private void ApplySettings()
+    {
+        AudioListener.volume = SaveData.m_masterVolume;
+    }
     public void SaveSettings()
     {
         if (UseBinary)
@@ -53,12 +57,14 @@ public class SaveManager : Singleton<SaveManager>
             FileStream file = new FileStream(m_pathBin, FileMode.Open);
             BinaryFormatter binFormat = new BinaryFormatter();
             SaveData = (GameSaveData)binFormat.Deserialize(file);
+            ApplySettings();
             file.Close();
         }
         else if (!UseBinary && File.Exists(m_pathJSON))
         {
             string saveData = File.ReadAllText(m_pathJSON);
             SaveData = JsonUtility.FromJson<GameSaveData>(saveData);
+
         }
         else
         {
@@ -66,6 +72,7 @@ public class SaveManager : Singleton<SaveManager>
             SaveData.hitsSinceLastSave = 0;
             SaveData.m_overallTime = 0;
             SaveData.LifetimeHits = 0;
+            SaveData.m_masterVolume = AudioListener.volume;
 
         }
 
@@ -78,6 +85,7 @@ public class SaveManager : Singleton<SaveManager>
 
         SaveData.hitsSinceLastSave = 0;
         SaveData.m_timeSinceLastSave = 0.0f;
+        SaveData.m_masterVolume = AudioListener.volume;
         LoadSettings();
         Debug.Log(Application.persistentDataPath);
     }
@@ -94,6 +102,7 @@ public struct GameSaveData
     public float m_overallTime;
     public int hitsSinceLastSave;
     public int LifetimeHits;
+    public float m_masterVolume;
 
 }
 

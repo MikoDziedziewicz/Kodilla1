@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PauseMenuController : Singleton<PauseMenuController>
 {
     public Button ResumeButton;
-    public Button QuitButton;
+    public Button MainMenuButton;
     public Button RestartButton;
     public GameObject Panel;
     public GameObject panelQuestion;
@@ -15,6 +15,7 @@ public class PauseMenuController : Singleton<PauseMenuController>
     public Button SaveButton;
     public Button LoadButton;
     private HudController m_HUD;
+ 
 
     public void SetPanelVisible(bool visible)
     {
@@ -50,6 +51,7 @@ public class PauseMenuController : Singleton<PauseMenuController>
     private void OnRestart()
     {
        GameplayManager.Instance.Restart();
+       
     }
 
     private void QuestionPopup()
@@ -63,10 +65,12 @@ public class PauseMenuController : Singleton<PauseMenuController>
         SetPanelVisible(true);
         SetPanelQuestionVisible(false);
     }    
-    private void OnQuit()
+    private void BackToMainMenu()
     {
         SaveManager.Instance.SaveSettings();
-        Application.Quit();
+        MainMenuController.Instance.Start();
+        SetPanelQuestionVisible(false);
+
     }
 
     // Start is called before the first frame update
@@ -74,9 +78,9 @@ public class PauseMenuController : Singleton<PauseMenuController>
     {
 
         ResumeButton.onClick.AddListener(OnResume);
-        QuitButton.onClick.AddListener(QuestionPopup);
+        MainMenuButton.onClick.AddListener(QuestionPopup);
         RestartButton.onClick.AddListener(OnRestart);
-        YesButton.onClick.AddListener(OnQuit);
+        YesButton.onClick.AddListener(BackToMainMenu);
         NoButton.onClick.AddListener(BackToMenu);
         SaveButton.onClick.AddListener(SaveManager.Instance.SaveSettings);
         LoadButton.onClick.AddListener(SaveManager.Instance.LoadSettings);

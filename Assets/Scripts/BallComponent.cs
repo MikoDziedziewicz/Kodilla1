@@ -17,15 +17,10 @@ public class BallComponent : InteractiveComponent
     private Vector3 c_startPosition;
     private CameraController cameraPosition;
 
-    
-    public AudioClip PullSound;
-    public AudioClip ShootSound;
-    public AudioClip RestartSound;
-    public AudioClip ImpactSound;
-
     private Animator m_animator;
 
     private ParticleSystem m_particles;
+    public GameSettingsDatabase GameDatabase;
 
     private void OnMouseDrag()
     {
@@ -69,7 +64,7 @@ public class BallComponent : InteractiveComponent
     {
         m_rigidbody.simulated = true;
         m_particles.Play();
-        MakeSound(PullSound);
+        MakeSound(GameDatabase.PullSound);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -80,7 +75,7 @@ public class BallComponent : InteractiveComponent
             m_hitTheGround = true;
             m_animator.enabled = true;
             m_animator.Play(0);
-            MakeSound(ImpactSound);
+            MakeSound(GameDatabase.ImpactSound);
         }
     }
 
@@ -149,7 +144,7 @@ public class BallComponent : InteractiveComponent
 
     private void OnMouseDown()
     {
-        MakeSound(PullSound);
+        MakeSound(GameDatabase.PullSound);
     }
 
 }

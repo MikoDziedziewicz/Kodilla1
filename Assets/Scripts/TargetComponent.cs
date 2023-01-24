@@ -5,14 +5,14 @@ using UnityEngine;
 public class TargetComponent : InteractiveComponent
 {
     private ParticleSystem t_particles;
-    public AudioClip CollisionSound;
-  
+    public GameSettingsDatabase GameDatabase;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Ball"))
         {
             t_particles.Play();
-            MakeSound(CollisionSound);
+            MakeSound(GameDatabase.ImpactSound);
             GameplayManager.Instance.Points += 1;
             SaveManager.Instance.SaveData.hitsSinceLastSave += 1;
         }
