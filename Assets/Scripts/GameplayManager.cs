@@ -9,11 +9,17 @@ using System.Threading.Tasks;
 public class GameplayManager : Singleton<GameplayManager>
 {
     private HudController m_HUD;
-    private int m_points = 0;
+    public int m_points = 0;
     public Button PauseButton;
     public Button RestartButton;
 
-    
+    // public int m_LifetimeHits = 0;
+
+    public GameObject fajneAnimacje;
+    public GameObject PrefabRef;
+
+
+
     public int Points
     {
         get { return m_points; }
@@ -112,6 +118,8 @@ public class GameplayManager : Singleton<GameplayManager>
         // TestAsync();
 
         m_state = EGameState.Playing;
+        Instantiate(fajneAnimacje, new Vector3(4.0f, -2.6f, 0.0f), Quaternion.identity);
+        Instantiate(PrefabRef, new Vector3(7.56f, 2.78f, 0.0f), Quaternion.identity);
         GetAllRestartableObjects();
 
         m_HUD = FindObjectOfType<HudController>();
@@ -179,7 +187,6 @@ public class GameplayManager : Singleton<GameplayManager>
             Restart();
         if (Input.GetKeyUp(KeyCode.Escape))
             PlayPause();
-
     }
 
 }

@@ -12,6 +12,8 @@ public class PauseMenuController : Singleton<PauseMenuController>
     public GameObject panelQuestion;
     public Button YesButton;
     public Button NoButton;
+    public Button SaveButton;
+    public Button LoadButton;
     private HudController m_HUD;
 
     public void SetPanelVisible(bool visible)
@@ -34,6 +36,7 @@ public class PauseMenuController : Singleton<PauseMenuController>
 
     private void OnPlay()
     {
+        SetPanelQuestionVisible(false);
         SetPanelVisible(false);
         m_HUD.PauseButton.enabled = true;
         m_HUD.RestartButton.enabled = true;
@@ -62,6 +65,7 @@ public class PauseMenuController : Singleton<PauseMenuController>
     }    
     private void OnQuit()
     {
+        SaveManager.Instance.SaveSettings();
         Application.Quit();
     }
 
@@ -74,6 +78,8 @@ public class PauseMenuController : Singleton<PauseMenuController>
         RestartButton.onClick.AddListener(OnRestart);
         YesButton.onClick.AddListener(OnQuit);
         NoButton.onClick.AddListener(BackToMenu);
+        SaveButton.onClick.AddListener(SaveManager.Instance.SaveSettings);
+        LoadButton.onClick.AddListener(SaveManager.Instance.LoadSettings);
 
         SetPanelVisible(false);
         SetPanelQuestionVisible(false);

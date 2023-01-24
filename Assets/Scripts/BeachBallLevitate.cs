@@ -11,11 +11,13 @@ public class BeachBallLevitate : MonoBehaviour
     public float Amplitude = 1.0f;
     public float RotationSpeed = 50;
 
+    
     float m_curScale = 0.0f;
 
     // Start is called before the first frame update
     void Start()
     {
+        
         m_startPosition = transform.position;
 
         m_startScale = transform.localScale;
@@ -46,9 +48,5 @@ public class BeachBallLevitate : MonoBehaviour
     {
         StopAllCoroutines();
     }
-    // Update is called once per frame
-    void Update()
-    {
-     
-    }
+  
 }

@@ -14,6 +14,7 @@ public class TargetComponent : InteractiveComponent
             t_particles.Play();
             MakeSound(CollisionSound);
             GameplayManager.Instance.Points += 1;
+            SaveManager.Instance.SaveData.hitsSinceLastSave += 1;
         }
 
     }

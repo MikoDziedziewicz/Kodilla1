@@ -134,10 +134,10 @@ public class BallComponent : InteractiveComponent
                 m_lineRenderer.enabled = false;
                 m_trailRenderer.enabled = true;
             }
-            for (int i = 0; i < 2; i++)
-            {
-                yield return null;
-            }
+
+            yield return null;
+            yield return null;
+            
         }
     }
     private void SetLineRendererPoints()
