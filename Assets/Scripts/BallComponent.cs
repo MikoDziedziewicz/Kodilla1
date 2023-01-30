@@ -19,7 +19,6 @@ public class BallComponent : InteractiveComponent
 
     private Animator m_animator;
 
-    private ParticleSystem m_particles;
     public GameSettingsDatabase GameDatabase;
 
     private void OnMouseDrag()
@@ -47,8 +46,6 @@ public class BallComponent : InteractiveComponent
     public override void DoRestart()
     {
         base.DoRestart();
-        m_rigidbody.velocity = Vector3.zero;
-        m_rigidbody.angularVelocity = 0.0f;
         m_rigidbody.simulated = true;
 
         m_connectedJoint.enabled = true;
@@ -101,7 +98,6 @@ public class BallComponent : InteractiveComponent
         m_audioSource = GetComponent<AudioSource>();
 
         m_animator = GetComponentInChildren<Animator>();
-
         m_particles = GetComponentInChildren<ParticleSystem>();
         StartCoroutine(JointCoroutine());
 

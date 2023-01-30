@@ -8,7 +8,8 @@ public class InteractiveComponent : MonoBehaviour, IRestartableObject
     protected Vector3 m_startPosition;
     protected Quaternion m_startRotation;
     protected Rigidbody2D m_rigidbody;
-
+    protected ParticleSystem m_particles;
+    
     public bool IsSimulated()
     {
         return m_rigidbody.simulated;
@@ -17,16 +18,21 @@ public class InteractiveComponent : MonoBehaviour, IRestartableObject
     {
         transform.position = m_startPosition;
         transform.rotation = m_startRotation;
+        m_rigidbody.velocity = Vector3.zero;
+        m_rigidbody.angularVelocity = 0.0f;
+        m_particles.Clear();
     }
 
     protected void DoPlay()
     {
         m_rigidbody.simulated = true;
+        m_particles.Clear();
     }
 
-    protected void DoPause() 
+    protected void DoPause()
     {
         m_rigidbody.simulated = false;
+        m_particles.Pause();
     }
 
     protected virtual void Start()
