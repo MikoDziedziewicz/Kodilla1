@@ -80,8 +80,8 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _Speed: 0
-    - _SpeedX: 0.1
-    - _SpeedY: 0.02
+    - _SpeedX: 0.063
+    - _SpeedY: -0.042
     - _SrcBlend: 1
     - _UVSec: 0
     - _WaveLength: 4

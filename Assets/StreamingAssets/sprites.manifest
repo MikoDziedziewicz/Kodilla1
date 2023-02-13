@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1205292781
+CRC: 2935355077
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: bcc6ad8505d6ddd7d4876a3e2adb193f
+    Hash: 29a558e306e5c745bf17df34d0855c01
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 12856abe7287e56cf41348699716cbba
+    Hash: 0f15269979e678734b1a9b4ec5fc9cd2
 HashAppended: 0
 ClassTypes:
 - Class: 21
@@ -19,16 +19,30 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 84
   Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
+- Assets/2D/Sprites/HatSprite.png
 - Assets/Materials/SmokeMaterial.mat
-- Assets/Materials/Geometry.mat
+- Assets/2D/Sprites/PuffSprite.png
+- Assets/2D/Sprites/CatapultBackSprite.png
+- Assets/2D/Sprites/CatapultFrontSprite.png
+- Assets/2D/Sprites/GrassThinSprite.png
 - Assets/Materials/VertexMovement.mat
+- Assets/Materials/Geometry.mat
+- Assets/2D/Sprites/BallSprite.png
+- Assets/2D/Sprites/ColumnShortSprite.png
+- Assets/2D/Sprites/ExplosionSprite.png
 - Assets/Materials/TargetPhysicalMaterial.physicsMaterial2D
 - Assets/Materials/ProgressBar.mat
+- Assets/2D/Sprites/Smoke.png
+- Assets/2D/Sprites/CoinSprite.png
 - Assets/Materials/CoinMaterial.mat
+- Assets/2D/Sprites/PlankSprite.png
 - Assets/Materials/Water.mat
+- Assets/2D/Sprites/BowlingBallSprite.png
+- Assets/2D/Sprites/SkyTileSprite.png
 - Assets/Materials/BallPhysicalMaterial.physicsMaterial2D
 - Assets/Materials/ImageUI.mat
-- Assets/Materials/Fala.mat
 Dependencies: []

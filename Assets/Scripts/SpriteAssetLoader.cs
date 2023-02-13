@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
-public class SpriteAssetLoader : MonoBehaviour 
+public class SpriteAssetLoader : Singleton<SpriteAssetLoader>
 {
-    public string spriteAssetName;
+    public string assetName;
     private Sprite spriteToLoad;
     private SpriteRenderer m_spriterenderer;
     
@@ -15,23 +16,16 @@ public class SpriteAssetLoader : MonoBehaviour
 
     public void LoadSpriteAsset()
     {
-        spriteToLoad = AssetBundlesManager.Instance.GetSprite(spriteAssetName);
+        spriteToLoad = AssetBundlesManager.Instance.GetSprite(assetName);
         
         if (spriteToLoad != null)
         {
-            m_spriterenderer.sprite = spriteToLoad; 
+            m_spriterenderer.sprite = spriteToLoad;
         }
         else
         {
-            Debug.Log("Sprite named " + spriteAssetName + " not found");
+            Debug.Log("Sprite named  " + assetName + "  not found");
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            LoadSpriteAsset();
-        }
-    }
 }
