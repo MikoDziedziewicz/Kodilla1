@@ -8,7 +8,6 @@ Shader "Unlit/VertexMovement"
         _Color("Color", Color) = (1,1,1,1)
         _MainTex("Texture2D", 2D) = "white" {}
         _SecTex("Texture2D", 2D) = "white" {}
-        _Blend("Blend", Range(0,1)) = 0.5
         distance("distance", float) = 0.5
     }
     SubShader
@@ -58,7 +57,7 @@ Shader "Unlit/VertexMovement"
 
             fixed4 frag(v2f i) : SV_Target
             {
-                _Blend = sin(_Time * _BlendingSpeed);
+                _Blend = (sin(_Time * _BlendingSpeed) + 1) / 2;
                 fixed4 col = lerp(tex2D(_MainTex,i.uv), tex2D(_SecTex,i.uv), _Blend);
                 col *= _Color;
                 return col;

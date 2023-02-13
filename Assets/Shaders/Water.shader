@@ -49,16 +49,18 @@ Shader "Unlit/Water"
             float _SpeedY;
             float _Amplitude;
             float _Frequency;
+          
 
             v2f vert (appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                float3 WorldPosition = mul(unity_ObjectToWorld, v.vertex).xyz;
-                float speed = _Time * _Frequency;
-                o.vertex.y += _Amplitude * sin(WorldPosition.x - speed);
+                float speed = _Time.y * _Frequency;
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 o.uv2 = TRANSFORM_TEX(v.uv2, _DisplacementTexture);
+                o.vertex.y += _Amplitude * sin(speed + o.vertex.x);
+                
+               
                 return o;
             }
 

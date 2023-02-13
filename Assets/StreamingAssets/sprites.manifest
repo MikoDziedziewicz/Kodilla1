@@ -1,0 +1,34 @@
+ManifestFileVersion: 0
+CRC: 1205292781
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: bcc6ad8505d6ddd7d4876a3e2adb193f
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 12856abe7287e56cf41348699716cbba
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 62
+  Script: {instanceID: 0}
+- Class: 84
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Materials/SmokeMaterial.mat
+- Assets/Materials/Geometry.mat
+- Assets/Materials/VertexMovement.mat
+- Assets/Materials/TargetPhysicalMaterial.physicsMaterial2D
+- Assets/Materials/ProgressBar.mat
+- Assets/Materials/CoinMaterial.mat
+- Assets/Materials/Water.mat
+- Assets/Materials/BallPhysicalMaterial.physicsMaterial2D
+- Assets/Materials/ImageUI.mat
+- Assets/Materials/Fala.mat
+Dependencies: []
