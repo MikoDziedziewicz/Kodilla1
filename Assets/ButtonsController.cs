@@ -8,7 +8,6 @@ public class ButtonsController : MonoBehaviour
     public Button loadSprite;
     public Button loadScene;
 
-    // Start is called before the first frame update
     void Start()
     {
         loadSprite.onClick.AddListener(delegate { 
@@ -21,9 +20,4 @@ public class ButtonsController : MonoBehaviour
    
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
