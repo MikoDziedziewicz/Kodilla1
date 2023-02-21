@@ -1,0 +1,31 @@
+ManifestFileVersion: 0
+CRC: 4070565477
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: a2c1f57ba96276ce082b3a90f26e86a1
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: f2013514fe9cc708c84fd1a7cbf968bb
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/UI/Icons.png
+- Assets/UI/Elements.png
+- Assets/2D/Textures/Stripes.png
+- Assets/Shaders/ProgressBar.shader
+- Assets/Shaders/ImageUI.shader
+- Assets/Materials/ProgressBar.mat
+- Assets/UI/EmptyButtons.png
+- Assets/Materials/ImageUI.mat
+- Assets/2D/Textures/YellowBar.png
+Dependencies: []

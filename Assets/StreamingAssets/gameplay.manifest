@@ -1,0 +1,55 @@
+ManifestFileVersion: 0
+CRC: 44511385
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 1286b8b0fa96ec0e28aff862b3bce6d4
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 6cd31764f4642785e5971a28c9b81a75
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 62
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 84
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/2D/Sprites/HatSprite.png
+- Assets/Materials/SmokeMaterial.mat
+- Assets/2D/Sprites/PuffSprite.png
+- Assets/2D/Sprites/CatapultBackSprite.png
+- Assets/2D/Sprites/CatapultFrontSprite.png
+- Assets/2D/Textures/WaterNormalMap.png
+- Assets/Materials/VertexMovement.mat
+- Assets/2D/Sprites/GrassThinSprite.png
+- Assets/2D/Textures/WaterReflectionTexture.renderTexture
+- Assets/2D/Sprites/BallSprite.png
+- Assets/2D/Sprites/ColumnShortSprite.png
+- Assets/2D/Animation/ExplosionAnim.anim
+- Assets/2D/Sprites/ExplosionSprite.png
+- Assets/Materials/TargetPhysicalMaterial.physicsMaterial2D
+- Assets/Shaders/Water.shader
+- Assets/2D/Sprites/Smoke.png
+- Assets/Materials/CoinMaterial.mat
+- Assets/2D/Sprites/CoinSprite.png
+- Assets/Materials/Water.mat
+- Assets/2D/Sprites/PlankSprite.png
+- Assets/2D/Sprites/BowlingBallSprite.png
+- Assets/2D/Sprites/SkyTileSprite.png
+- Assets/Materials/BallPhysicalMaterial.physicsMaterial2D
+- Assets/Shaders/VertexMovement.shader
+- Assets/2D/Animation/Explosion.controller
+Dependencies: []
