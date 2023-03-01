@@ -22,6 +22,7 @@ public class PurchasingManager : Singleton<PurchasingManager>, IStoreListener
         }
         var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
         builder.AddProduct(removeAdsId, ProductType.NonConsumable);
+        UnityPurchasing.Initialize(this, builder);
     }
 
 
@@ -46,21 +47,6 @@ public class PurchasingManager : Singleton<PurchasingManager>, IStoreListener
         Debug.LogFormat("OnPurchaseFailed: FAIL. Product: '{0}', PurchaseFailureReason: {1}", product.definition.storeSpecificId, failureReason);
     }
 
-    public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs purchaseEvent)
-    {
-        if (string.Equals(purchaseEvent.purchasedProduct.definition.id, removeAdsId, System.StringComparison.Ordinal))
-        {
-            Debug.LogFormat("ProcessPurchase: PASS. Product : {0}", purchaseEvent.purchasedProduct.definition.id);
-            PlayerPrefs.SetInt("AdsRemoved", 1);
-        }
-        else
-        {
-            Debug.LogFormat("ProcessPurchase : FAIL. Unrecognized product : {0}", purchaseEvent.purchasedProduct.definition.id);
-        }
-
-        return PurchaseProcessingResult.Complete;
-    }
-
     private void PurchaseProduct(string id)
     {
         if (IsInitialized())
@@ -81,6 +67,22 @@ public class PurchasingManager : Singleton<PurchasingManager>, IStoreListener
         {
             Debug.Log("PurchaseProduct FAIL. Not initialized.");
         }
+
+    }
+
+    public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs purchaseEvent)
+    {
+        if (string.Equals(purchaseEvent.purchasedProduct.definition.id, removeAdsId, System.StringComparison.Ordinal))
+        {
+            Debug.LogFormat("ProcessPurchase: PASS. Product : {0}", purchaseEvent.purchasedProduct.definition.id);
+            PlayerPrefs.SetInt("AdsRemoved", 1);
+        }
+        else
+        {
+            Debug.LogFormat("ProcessPurchase : FAIL. Unrecognized product : {0}", purchaseEvent.purchasedProduct.definition.id);
+        }
+
+        return PurchaseProcessingResult.Complete;
 
     }
     public void BuyRemoveAds()

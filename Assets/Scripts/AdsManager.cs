@@ -22,8 +22,11 @@ public class AdsManager : MonoBehaviour
         {
             yield return new WaitForSeconds(0.5f);
         }
-        Advertisement.Show(bannerID);
-        Advertisement.Banner.SetPosition(BannerPosition.TOP_CENTER);
 
+        if (PlayerPrefs.GetInt("AdsRemoved", 0) != 1)
+        {
+            Advertisement.Show(bannerID);
+            Advertisement.Banner.SetPosition(BannerPosition.TOP_CENTER);
+        }
     }
 }
