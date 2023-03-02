@@ -100,7 +100,7 @@ public class BallComponent : InteractiveComponent
         m_animator = GetComponentInChildren<Animator>();
         m_particles = GetComponentInChildren<ParticleSystem>();
         StartCoroutine(JointCoroutine());
-
+        
     }
 
     // Update is called once per frame

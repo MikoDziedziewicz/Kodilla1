@@ -12,6 +12,8 @@ public class GameplayManager : Singleton<GameplayManager>
     public int m_points = 0;
     public Button PauseButton;
     public Button RestartButton;
+    public int numberOfPrefabs = 2;
+    private Vector3 spawnPosition;
    
     // public int m_LifetimeHits = 0;
 
@@ -116,11 +118,19 @@ public class GameplayManager : Singleton<GameplayManager>
         // TestAsync();
 
         m_state = EGameState.Playing;
-        Instantiate(GameDatabase.TargetPrefab, new Vector3(7.56f, 2.78f, 0.0f), Quaternion.identity);
+
         GetAllRestartableObjects();
 
         m_HUD = FindObjectOfType<HudController>();
         Points = 0;
+
+        for (int i = 0; i < numberOfPrefabs; i++)
+        {
+            float spacingX = GameDatabase.TargetPrefab.transform.localScale.x * 2f;
+            float posX = 4.7f + (spacingX * i);
+            spawnPosition = new Vector3(posX, -1.34f, 0.0f);
+            Test.Instance.PrefabsList.Add(Instantiate(GameDatabase.TargetPrefab, spawnPosition, Quaternion.identity));
+        }
     }
 
     /*IEnumerator FPSCoroutine()
@@ -152,7 +162,6 @@ public class GameplayManager : Singleton<GameplayManager>
         Debug.Log("Coroutine done after 3 seconds");
     }
     */
-
     void Destroy()
     {
         StopAllCoroutines();
