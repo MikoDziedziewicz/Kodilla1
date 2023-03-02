@@ -6,12 +6,6 @@ public class Test : Singleton<Test>
 {
     public List<GameObject> PrefabsList = new List <GameObject>();
 
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.T))
