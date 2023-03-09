@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using GooglePlayGames;
+using UnityEngine.SocialPlatforms;
 
 public class MainMenuController : Singleton<MainMenuController>
 {
@@ -7,6 +9,7 @@ public class MainMenuController : Singleton<MainMenuController>
     public Button OptionsButton;
     public Button QuitButton;
     public Button ShopButton;
+    public Button ShowAchievementsButton;
 
     public GameObject MainPanel;
     public GameObject MainMenuPanel;
@@ -19,7 +22,7 @@ public class MainMenuController : Singleton<MainMenuController>
         OptionsButton.onClick.AddListener(delegate { ShowOptions(true); });
         QuitButton.onClick.AddListener(delegate { OnQuit(); });
         ShopButton.onClick.AddListener(delegate { ShowShop(true); });
-
+        ShowAchievementsButton.onClick.AddListener(delegate { ShowAchievements(); });
         SetPanelVisible(true);
         OptionsPanel.SetActive(false);
         MainMenuPanel.SetActive(true);
@@ -35,8 +38,24 @@ public class MainMenuController : Singleton<MainMenuController>
     {
         SetPanelVisible(false);
         GameplayManager.Instance.Restart();
+        UnlockAchievement();
     }
 
+    private void UnlockAchievement()
+    {
+        Social.ReportProgress("Cfjewijawiu_QA", 100.0f, (bool success) =>
+        {
+            if (success)
+            {
+                Debug.Log("Achievement unlocked");
+            }
+        });
+    }
+
+    private void ShowAchievements()
+    {
+        Social.ShowAchievementsUI();
+    }
     public void ShowOptions(bool bShow)
     {
         OptionsPanel.SetActive(bShow);
