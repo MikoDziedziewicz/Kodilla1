@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using GooglePlayGames;
 using UnityEngine.SocialPlatforms;
+using GooglePlayGames.BasicApi;
 
 public class MainMenuController : Singleton<MainMenuController>
 {
@@ -16,6 +17,7 @@ public class MainMenuController : Singleton<MainMenuController>
     public GameObject OptionsPanel;
     public GameObject ShopPanel;
 
+
     public void Start()
     {
         PlayButton.onClick.AddListener(delegate { OnPlay(); });
@@ -27,6 +29,8 @@ public class MainMenuController : Singleton<MainMenuController>
         OptionsPanel.SetActive(false);
         MainMenuPanel.SetActive(true);
         ShopPanel.SetActive(false);
+
+        PlayGamesPlatform.Activate();
     }
 
     public void SetPanelVisible(bool visible)
@@ -43,7 +47,8 @@ public class MainMenuController : Singleton<MainMenuController>
 
     private void UnlockAchievement()
     {
-        Social.ReportProgress("Cfjewijawiu_QA", 100.0f, (bool success) =>
+       
+        Social.ReportProgress(GPGSIds.achievement_pierwsze_uruchomienie, 100.0f, (bool success) =>
         {
             if (success)
             {
