@@ -12,13 +12,8 @@ public class GameplayManager : Singleton<GameplayManager>
     public int m_points = 0;
     public Button PauseButton;
     public Button RestartButton;
-    public int numberOfPrefabs = 2;
-    private Vector3 spawnPosition;
-   
-    // public int m_LifetimeHits = 0;
 
     public GameSettingsDatabase GameDatabase;
-
 
     public int Points
     {
@@ -28,7 +23,6 @@ public class GameplayManager : Singleton<GameplayManager>
             m_points = value;
             m_HUD.UpdatePoints(m_points);
         }
-
     }
     public enum EGameState
     {
@@ -37,27 +31,22 @@ public class GameplayManager : Singleton<GameplayManager>
     }
 
     private EGameState m_state;
-
     public EGameState GameState
     {
         get { return m_state; }
-        set 
+        set
         {
             m_state = value;
             switch (m_state)
             {
                 case EGameState.Paused:
-                    {
-                        if (OnGamePaused != null)
-                            OnGamePaused();
-                    }
+                    if (OnGamePaused != null)
+                        OnGamePaused();
                     break;
 
                 case EGameState.Playing:
-                    {
-                        if (OnGamePlaying != null)
-                            OnGamePlaying();
-                    }
+                    if (OnGamePlaying != null)
+                        OnGamePlaying();
                     break;
             }
         }
@@ -81,97 +70,48 @@ public class GameplayManager : Singleton<GameplayManager>
             foreach (var childInterface in childrenInterfaces)
                 m_restartableObjects.Add(childInterface);
         }
-    }
 
-    /* private void TestThrow()
-    {
-        throw new NullReferenceException("Test exception");
+        /*
+         * tutaj tez moglbym uzyc petli for zamiast foreach
+         for (int i = 0; i < rootGameObjects.Length; i++)
+        {
+            IRestartableObject[] childrenInterfaces = rootGameObjects[i].GetComponentsInChildren<IRestartableObject>();
+
+            for (int j = 0; j < childrenInterfaces.Length; j++)
+                m_restartableObjects.Add(childrenInterfaces[j]);
+        }
+         */
     }
-    */ 
 
     // Start is called before the first frame update
     void Start()
     {
-        /* Cwiczenie - lapanie wyjatku, ktory wyrzuca metoda TestThrow();
-        int[] Test = new int[2] { 0, 0 };
-        try
-        {
-            Test[2] = 1;
-            TestThrow();
-        }
-        catch (IndexOutOfRangeException e)
-        {
-            Debug.Log("Index Exception: " + e.Message);
-        }
-        catch (NullReferenceException e)
-        {
-            Debug.Log("Null Refrence Exception: " + e.Message);
-        }
-        catch (Exception e)
-        {
-            Debug.Log("Exception: " + e.Message);
-        }
-       */
-        // StartCoroutine(FPSCoroutine());
-        // StartCoroutine(TestCoroutine());
-
-        // TestAsync();
-
         m_state = EGameState.Playing;
+        ObjectPool.Instance.Init(GameDatabase.TargetPrefab, 5);
+        ObjectPool.Instance.SpawnObject(new Vector3(7.6f, 2.86f, 0), Quaternion.identity);
 
         GetAllRestartableObjects();
 
         m_HUD = FindObjectOfType<HudController>();
         Points = 0;
-
-        for (int i = 0; i < numberOfPrefabs; i++)
-        {
-            float spacingX = GameDatabase.TargetPrefab.transform.localScale.x * 2f;
-            float posX = 4.7f + (spacingX * i);
-            spawnPosition = new Vector3(posX, -1.34f, 0.0f);
-            Test.Instance.PrefabsList.Add(Instantiate(GameDatabase.TargetPrefab, spawnPosition, Quaternion.identity));
-        }
     }
-
-    /*IEnumerator FPSCoroutine()
-    {
-        Debug.Log("Starting TestCoroutine");
-        yield return new WaitForSeconds(0.5f);
-
-        while (true)
-        {
-            Debug.Log("FPS: " + (Time.frameCount / Time.time));
-            yield return new WaitForSeconds(0.5f);
-        }
-    } */
-    /*async void TestAsync()
-    {
-        Debug.Log("Starting async method");
-        while (true)
-        {
-            Debug.Log("FPS: " + Time.frameCount / Time.time);
-            await Task.Delay(TimeSpan.FromSeconds(1));
-        }
-    }
-    */
-
-    /* IEnumerator TestCoroutine()
-    {
-        Debug.Log("Starting coroutine method");
-        yield return new WaitForSeconds(3);
-        Debug.Log("Coroutine done after 3 seconds");
-    }
-    */
+  
     void Destroy()
     {
         StopAllCoroutines();
     }
-    
 
     public void Restart()
     {
-        foreach (var restartableObject in m_restartableObjects)
+        // wszystkie obiekty restartableObject dziedzicza po tym samym interfejsie, wiec zmieniam typ zmiennej z var na IRestartableObject
+        foreach (IRestartableObject restartableObject in m_restartableObjects)
             restartableObject.DoRestart();
+        /* moglbym tez zmienic petle z foreach na for, ale nie wiem czy byloby to bardziej wydajne? 
+         for (int i = 0; i < m_restartableObjects.Length; i++)
+        {
+             m_restartableObjects[i].DoRestart();
+        }
+        */
         Points = 0;
         GameState = EGameState.Playing;
     }
@@ -187,11 +127,11 @@ public class GameplayManager : Singleton<GameplayManager>
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
             PlayPause();
-        if (Input.GetKeyUp(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R))
             Restart();
-        if (Input.GetKeyUp(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
             PlayPause();
     }
 

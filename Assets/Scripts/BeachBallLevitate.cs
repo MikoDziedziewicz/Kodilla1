@@ -11,36 +11,36 @@ public class BeachBallLevitate : MonoBehaviour
     public float Amplitude = 1.0f;
     public float RotationSpeed = 50;
 
-    
-    float m_curScale = 0.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        
-        m_startPosition = transform.position;
-
+        //transform.localPosition zamiast globalnej, bo obiekt ma rodzica
+        m_startPosition = transform.localPosition;
         m_startScale = transform.localScale;
-
         StartCoroutine(BeachBallCoroutine());
     }
 
     IEnumerator BeachBallCoroutine()
     {
+        // zamiast tworzyc nowy obiekt WaitForSeconds za kazdym razem, gdy wywoluje yield return new WaitForSeconds(1.0f), tworze go tylko raz i przechowuje w zmiennej wait. 
+        WaitForSeconds wait = new WaitForSeconds(1.0f);
         while (true)
         {
-            m_curYPos = Mathf.PingPong(Time.time, Amplitude) - Amplitude * 0.5f;
-            transform.position = new Vector3(m_startPosition.x,
-                                             m_startPosition.y + m_curYPos,
-                                             m_startPosition.z);
+            /* obliczam wartosc jednorazowo a potem uzywam zmiennej 
+             minimalizacja zbednych operacji w petlli i tworzenia nowych obiektow */
+           
+            float pingPongValue = Mathf.PingPong(Time.time, Amplitude) - Amplitude * 0.5f;
+            m_curYPos = pingPongValue;
+            transform.localPosition = new Vector3(m_startPosition.x, m_startPosition.y + m_curYPos, m_startPosition.z);
 
             m_curZRot += Time.deltaTime * RotationSpeed;
-            transform.rotation = Quaternion.Euler(0, 0, m_curZRot);
+            transform.localRotation = Quaternion.Euler(0, 0, m_curZRot);
 
-            m_curScale = Mathf.PingPong(Time.time, Amplitude) - Amplitude * 0.5f;
-            transform.localScale = new Vector3(m_startScale.x + m_curScale, m_startScale.y + m_curScale, m_startScale.z);
+            float scaleValue = pingPongValue;
+            transform.localScale = new Vector3(m_startScale.x + scaleValue, m_startScale.y + scaleValue, m_startScale.z);
 
-            yield return new WaitForSeconds(1.0f);
+            yield return wait;
         }
     }
 
