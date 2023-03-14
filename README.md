@@ -5,6 +5,6 @@ Klon Angry Birds, który powstał w ramach kursu Unity Developer. Jest to swego 
 Trochę panuje tu chaos, ale zostawiam jako udokumentowanie procesu nauki :D  
 
 
-I cloned Angry Birds as part of my Unity Developer course. It's sort of a playground project that I used for learning. The project includes: basic gameplay loop and mechanics, implemented background music and sound effects, animations based on transformations and a set of sprites, a particle system, a simple Asset Bundles system for mobile games, the ability to save game settings(volume control), ScriptableObject, UI design, shader experiments, implemented ads (Unity Ads), payment system (Unity In-App Purchasing), achievements (Google Play Game Services). The game has been uploaded to Google Play for internal testing.
+I cloned Angry Birds as part of my Unity Developer course. It's sort of a playground project that I used for learning. The project includes: basic gameplay loop and mechanics, implemented background music and sound effects, animations based on transformations and a set of sprites, a particle system, a simple Asset Bundles system for mobile games, the ability to save game settings(volume control), ScriptableObject, UI, shader experiments, implemented ads (Unity Ads), payment system (Unity In-App Purchasing), achievements (Google Play Game Services). The game has been uploaded to Google Play for internal testing.
 
 It's a bit chaotic, but I'm leaving it as documentation of my learning process 😃"
