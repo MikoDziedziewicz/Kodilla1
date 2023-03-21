@@ -61,6 +61,5 @@ public class AssetBundlesManager : Singleton<AssetBundlesManager>
         scenePaths = ab1.GetAllScenePaths();
         SceneManager.LoadScene(scenePaths[0], LoadSceneMode.Single);
     }
-  
    
 }

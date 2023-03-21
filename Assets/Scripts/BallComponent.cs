@@ -42,7 +42,6 @@ public class BallComponent : InteractiveComponent
             transform.position = newBallPos;
         }
     }
-
     public override void DoRestart()
     {
         base.DoRestart();
@@ -99,14 +98,89 @@ public class BallComponent : InteractiveComponent
 
         m_animator = GetComponentInChildren<Animator>();
         m_particles = GetComponentInChildren<ParticleSystem>();
-        StartCoroutine(JointCoroutine());
-        
+        StartCoroutine(JointCoroutine());  
     }
+
+    #if UNITY_IOS || UNITY_ANDROID
+    private void OnTouchDown()
+    {
+        MakeSound(GameDatabase.PullSound);
+    }
+    private void OnTouchUp()
+    {
+        m_rigidbody.simulated = true;
+        m_particles.Play();
+        MakeSound(GameDatabase.PullSound);
+    }
+    private void OnTouchDrag()
+    {
+        m_hitTheGround = false;
+        m_rigidbody.simulated = false;
+        
+        if (Input.touchCount <= 0)
+            return;
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.touches[0].position);
+        transform.position = new Vector3(worldPos.x, worldPos.y, 0);
+
+        Vector2 newBallPos = new Vector3(worldPos.x, worldPos.y);
+        float CurJointDistance = Vector3.Distance(newBallPos, m_connectedBody.transform.position);
+
+        if (CurJointDistance > MaxSpringDistance)
+        {
+            Vector2 direction = (newBallPos - m_connectedBody.position).normalized;
+            transform.position = m_connectedBody.position + direction * MaxSpringDistance;
+        }
+        else
+        {
+            transform.position = newBallPos;
+        }
+    }
+    #endif
+
+    #if UNITY_IOS || UNITY_ANDROID
+    private void UpdateTouch()
+    {
+        if (Input.touchCount <= 0)
+            return;
+
+        switch (Input.touches[0].phase)
+        {
+            case TouchPhase.Began:
+                {
+                    Ray ray = Camera.main.ScreenPointToRay(Input.touches[0].position);
+                    RaycastHit hit;
+
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        if (hit.collider != null && hit.collider.gameObject == this.gameObject)
+                            OnTouchDown();
+                    }
+                }
+                break;
+
+            case TouchPhase.Moved:
+                {
+                    OnTouchDrag();
+                }
+                break;
+
+            case TouchPhase.Ended:
+                {
+                    OnTouchUp();
+                }
+                break;
+        };
+    }
+    #else
+    #endif
 
     // Update is called once per frame
     void Update()
     {
-        
+        #if UNITY_IOS || UNITY_ANDROID
+        UpdateTouch();
+        #endif
+
         m_trailRenderer.enabled = !m_hitTheGround;
         if (transform.position.x < m_connectedBody.transform.position.x + SlingStart)
         {

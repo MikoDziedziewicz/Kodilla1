@@ -42,10 +42,10 @@ public class MainMenuController : Singleton<MainMenuController>
     {
         SetPanelVisible(false);
         GameplayManager.Instance.Restart();
-        UnlockAchievement();
+        UnlockFirstLaunchAchievement();
     }
 
-    private void UnlockAchievement()
+    private void UnlockFirstLaunchAchievement()
     {
        
         Social.ReportProgress(GPGSIds.achievement_pierwsze_uruchomienie, 100.0f, (bool success) =>
